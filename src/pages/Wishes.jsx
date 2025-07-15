@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Send } from "lucide-react"; // Add Send import
+import { ChevronLeft, ChevronRight, Send } from "lucide-react";
 import { db } from "@/lib/firebase";
 import {
   collection,
@@ -12,17 +12,17 @@ import {
 } from "firebase/firestore";
 
 export default function Wishes() {
-  // State declarations
   const [currentIndex, setCurrentIndex] = useState(0);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [userName, setUserName] = useState("");
   const [rsvpStatus, setRsvpStatus] = useState("");
   const [wishSubmitting, setWishSubmitting] = useState(false);
-  const [rsvpSubmitting, setRsvpSubmitting] = useState(false);
   const [wishSuccess, setWishSuccess] = useState(false);
+  const [error, setError] = useState(null);
+  const [rsvpSuccess, setRsvpSuccess] = useState(false);
 
-  // Auto-advance effect
+  // Авто-слайдер
   useEffect(() => {
     if (comments.length > 0) {
       const timer = setInterval(nextWish, 5000);
@@ -30,16 +30,26 @@ export default function Wishes() {
     }
   }, [currentIndex, comments.length]);
 
-  // Fetch comments
+  // Тілектерді алу
   useEffect(() => {
     const q = query(collection(db, "wishes"), orderBy("timestamp", "desc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const updatedComments = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setComments(updatedComments);
-    });
+
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const updatedComments = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setComments(updatedComments);
+        setError(null);
+      },
+      (error) => {
+        console.error("Error fetching comments:", error);
+        setError("Тілектерді жүктеу кезінде қате шықты");
+      }
+    );
+
     return () => unsubscribe();
   }, []);
 
@@ -51,339 +61,253 @@ export default function Wishes() {
     setCurrentIndex((prev) => (prev - 1 + comments.length) % comments.length);
   };
 
-  const handleWishSubmit = async (e) => {
+  // Жалғыз батырма арқылы екі дерек жіберу
+  const handleCombinedSubmit = async (e) => {
     e.preventDefault();
-    if (!newComment.trim() || !userName.trim()) return;
+    setError(null);
+
+    if (!userName.trim()) {
+      setError("Атыңызды енгізіңіз");
+      return;
+    }
+
+    if (!newComment.trim() && !rsvpStatus) {
+      setError("Тілегіңізді немесе қатысу жауабын енгізіңіз");
+      return;
+    }
 
     setWishSubmitting(true);
-    try {
-      await addDoc(collection(db, "wishes"), {
-        userName: userName.trim(),
-        comment: newComment.trim(),
-        timestamp: serverTimestamp(),
-      });
 
-      setNewComment("");
+    try {
+      if (newComment.trim()) {
+        await addDoc(collection(db, "wishes"), {
+          userName: userName.trim(),
+          comment: newComment.trim(),
+          timestamp: serverTimestamp(),
+        });
+        setWishSuccess(true);
+        setNewComment("");
+      }
+
+      if (rsvpStatus) {
+        await addDoc(collection(db, "rsvp"), {
+          userName: userName.trim(),
+          rsvpStatus,
+          timestamp: serverTimestamp(),
+        });
+        setRsvpSuccess(true);
+        setRsvpStatus("");
+      }
+
       setUserName("");
-      setWishSuccess(true);
-      setTimeout(() => setWishSuccess(false), 3000);
+
+      setTimeout(() => {
+        setWishSuccess(false);
+        setRsvpSuccess(false);
+      }, 3000);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Жіберу қатесі:", error);
+      setError("Деректерді жіберу кезінде қате шықты");
     } finally {
       setWishSubmitting(false);
     }
   };
 
-  const handleRsvpSubmit = async (e) => {
-    e.preventDefault();
-    if (!rsvpStatus) return;
-
-    setRsvpSubmitting(true);
-    try {
-      await addDoc(collection(db, "rsvp"), {
-        userName: userName.trim(),
-        rsvpStatus: rsvpStatus,
-        timestamp: serverTimestamp(),
-      });
-      setRsvpStatus("");
-      setWishSuccess(true);
-      setTimeout(() => setWishSuccess(false), 3000);
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setRsvpSubmitting(false);
-    }
-  };
-
   return (
-    <section
-      id="wishes"
-      className="min-h-screen relative overflow-hidden py-20"
-    >
-      <div className="max-w-4xl mx-auto mt-8 px-4">
-        {/* Wishes Section */}
-        <div className="mb-12">
-          <h3 className="text-xl font-medium text-gray-800 mb-6">Тілектер</h3>
+    <section id="wishes" className="min-h-screen py-20 px-4">
+      <div className="max-w-3xl mx-auto">
+        {/* Error */}
+        {error && (
+          <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+            {error}
+          </div>
+        )}
 
-          {/* Success Message */}
-          {wishSuccess && (
-            <div className="mb-4 p-4 bg-green-50 text-green-600 rounded-lg">
-              Тілегіңіз сәтті жіберілді
+        {/* Success messages */}
+        {wishSuccess && (
+          <div className="mb-4 p-4 bg-green-50 text-green-600 rounded-lg">
+            Тілегіңіз сәтті жіберілді
+          </div>
+        )}
+        {rsvpSuccess && (
+          <div className="mb-4 p-4 bg-green-50 text-green-600 rounded-lg">
+            Қатысу жауабы жіберілді
+          </div>
+        )}
+
+        {/* Слайдер */}
+        {comments.length > 0 && (
+          <div className="mb-8 relative">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
+              >
+                <div className="font-medium text-gray-800 mb-2">
+                  {comments[currentIndex].userName}
+                </div>
+                <div className="text-gray-600 mb-3">
+                  {comments[currentIndex].comment}
+                </div>
+                <div className="text-sm text-gray-400">
+                  {comments[currentIndex].timestamp
+                    ?.toDate()
+                    .toLocaleDateString()}
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="flex justify-between items-center mt-4">
+              <button
+                onClick={prevWish}
+                className="p-2 bg-white border rounded-full"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <span className="text-sm text-gray-500">
+                {currentIndex + 1} / {comments.length}
+              </span>
+              <button
+                onClick={nextWish}
+                className="p-2 bg-white border rounded-full"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Wishes Display Slider */}
-          {comments.length > 0 && (
-            <div className="mb-8 relative">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
-                >
-                  <div className="font-medium text-gray-800 mb-2">
-                    {comments[currentIndex].userName}
-                  </div>
-                  <div className="text-gray-600 mb-3">
-                    {comments[currentIndex].comment}
-                  </div>
-                  <div className="text-sm text-gray-400">
-                    {comments[currentIndex].timestamp
-                      ?.toDate()
-                      .toLocaleDateString()}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+        {/* Біріктірілген форма */}
+        <motion.form
+          onSubmit={handleCombinedSubmit}
+          className="space-y-6 bg-white rounded-xl shadow-sm border border-gray-100 p-6"
+        >
+          {/* Name */}
+          <div className="space-y-1">
+            <label className="text-sm text-gray-700">Сіздің атыңыз</label>
+            <input
+              type="text"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              placeholder="Атыңызды енгізіңіз..."
+              className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200"
+              required
+            />
+          </div>
 
-              {/* Navigation Buttons */}
-              <div className="flex justify-between items-center mt-4">
-                <button
-                  onClick={prevWish}
-                  className="p-2 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-rose-50 hover:text-rose-500 transition-colors"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <span className="text-sm text-gray-500">
-                  {currentIndex + 1} / {comments.length}
-                </span>
-                <button
-                  onClick={nextWish}
-                  className="p-2 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-rose-50 hover:text-rose-500 transition-colors"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          )}
+          {/* Wish */}
+          <div className="space-y-1">
+            <label className="text-sm text-gray-700">Тілегіңіз</label>
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Тілегіңізді жазыңыз..."
+              className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 h-28"
+            />
+          </div>
 
-          {/* Wish Form */}
-          <motion.form
-            onSubmit={handleWishSubmit}
-            className="space-y-4 bg-white rounded-xl shadow-sm border border-gray-100 p-6"
+          {/* RSVP */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              {
+                value: "attending",
+                label: "Қатысамын",
+                icon: (
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                ),
+              },
+              {
+                value: "not_attending",
+                label: "Қатыса алмаймын",
+                icon: (
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                ),
+              },
+              {
+                value: "uncertain",
+                label: "Белгісіз",
+                icon: (
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                ),
+              },
+            ].map((option) => (
+              <label
+                key={option.value}
+                className={`relative group cursor-pointer flex flex-col items-center justify-center rounded-xl border px-6 py-6 transition-all duration-200 ${
+                  rsvpStatus === option.value
+                    ? "border-rose-500 bg-rose-50 shadow-md text-rose-600"
+                    : "border-gray-200 bg-white hover:border-rose-300 hover:shadow"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="rsvp"
+                  value={option.value}
+                  checked={rsvpStatus === option.value}
+                  onChange={(e) => setRsvpStatus(e.target.value)}
+                  className="absolute h-0 w-0 opacity-0"
+                />
+                <div className="mb-2">{option.icon}</div>
+                <span className="text-sm font-medium">{option.label}</span>
+              </label>
+            ))}
+          </div>
+
+          {/* Жалғыз батырма */}
+          <button
+            type="submit"
+            disabled={wishSubmitting}
+            className="w-full bg-rose-500 text-white px-6 py-3 rounded-lg hover:bg-rose-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {/* Name Input */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-gray-600">
-                <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-                <span className="text-sm">Сіздің атыңыз</span>
-              </div>
-              <input
-                type="text"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                placeholder="Атыңызды енгізіңіз..."
-                className="w-full px-4 py-3 rounded-lg bg-gray-50/50 border border-gray-200"
-                required
-              />
-            </div>
-
-            {/* Message Input */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-gray-600">
-                <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-                <span className="text-sm">Тілегіңіз</span>
-              </div>
-              <textarea
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Жас жұптарға тілегіңізді жазыңыз..."
-                className="w-full px-4 py-3 rounded-lg bg-gray-50/50 border border-gray-200 h-32 resize-none"
-                required
-              />
-            </div>
-
-            {/* Wish Submit Button */}
-            <button
-              type="submit"
-              disabled={wishSubmitting}
-              className="w-full bg-rose-500 text-white px-6 py-3 rounded-lg hover:bg-rose-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              {wishSubmitting ? (
-                <span>Жіберілуде...</span>
-              ) : (
-                <>
-                  <Send className="w-4 h-4" />
-                  <span>Тілек жіберу</span>
-                </>
-              )}
-            </button>
-          </motion.form>
-        </div>
-
-        {/* RSVP Section */}
-        <div className="mt-12">
-          <h3 className="text-xl font-medium text-gray-800 mb-6">
-            Қатысу жауабы
-          </h3>
-          <motion.form
-            onSubmit={handleRsvpSubmit}
-            className="space-y-6 bg-white rounded-xl shadow-sm border border-gray-100 p-6"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <label className="relative flex cursor-pointer items-center justify-center rounded-xl border border-gray-200 bg-white p-4 transition-all hover:border-rose-200 hover:shadow-md">
-                <input
-                  type="radio"
-                  name="rsvp"
-                  value="attending"
-                  checked={rsvpStatus === "attending"}
-                  onChange={(e) => setRsvpStatus(e.target.value)}
-                  className="absolute h-0 w-0 opacity-0"
-                />
-                <div className="flex flex-col items-center gap-2">
-                  <div
-                    className={`rounded-full p-2 ${
-                      rsvpStatus === "attending"
-                        ? "bg-rose-100 text-rose-600"
-                        : "bg-gray-100 text-gray-500"
-                    }`}
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
-                  <span
-                    className={`text-sm font-medium ${
-                      rsvpStatus === "attending"
-                        ? "text-rose-600"
-                        : "text-gray-700"
-                    }`}
-                  >
-                    Құрметпен қатысамын
-                  </span>
-                </div>
-              </label>
-
-              <label className="relative flex cursor-pointer items-center justify-center rounded-xl border border-gray-200 bg-white p-4 transition-all hover:border-rose-200 hover:shadow-md">
-                <input
-                  type="radio"
-                  name="rsvp"
-                  value="not_attending"
-                  checked={rsvpStatus === "not_attending"}
-                  onChange={(e) => setRsvpStatus(e.target.value)}
-                  className="absolute h-0 w-0 opacity-0"
-                />
-                <div className="flex flex-col items-center gap-2">
-                  <div
-                    className={`rounded-full p-2 ${
-                      rsvpStatus === "not_attending"
-                        ? "bg-rose-100 text-rose-600"
-                        : "bg-gray-100 text-gray-500"
-                    }`}
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </div>
-                  <span
-                    className={`text-sm font-medium ${
-                      rsvpStatus === "not_attending"
-                        ? "text-rose-600"
-                        : "text-gray-700"
-                    }`}
-                  >
-                    Өкінішке орай қатыса алмаймын
-                  </span>
-                </div>
-              </label>
-
-              <label className="relative flex cursor-pointer items-center justify-center rounded-xl border border-gray-200 bg-white p-4 transition-all hover:border-rose-200 hover:shadow-md">
-                <input
-                  type="radio"
-                  name="rsvp"
-                  value="uncertain"
-                  checked={rsvpStatus === "uncertain"}
-                  onChange={(e) => setRsvpStatus(e.target.value)}
-                  className="absolute h-0 w-0 opacity-0"
-                />
-                <div className="flex flex-col items-center gap-2">
-                  <div
-                    className={`rounded-full p-2 ${
-                      rsvpStatus === "uncertain"
-                        ? "bg-rose-100 text-rose-600"
-                        : "bg-gray-100 text-gray-500"
-                    }`}
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <span
-                    className={`text-sm font-medium ${
-                      rsvpStatus === "uncertain"
-                        ? "text-rose-600"
-                        : "text-gray-700"
-                    }`}
-                  >
-                    Әзірге белгісіз
-                  </span>
-                </div>
-              </label>
-            </div>
-
-            {/* RSVP Submit Button */}
-            <button
-              type="submit"
-              disabled={rsvpSubmitting}
-              className="w-full bg-rose-500 text-white px-6 py-3 rounded-lg hover:bg-rose-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              {rsvpSubmitting ? (
-                <span>Жіберілуде...</span>
-              ) : (
-                <>
-                  <Send className="w-4 h-4" />
-                  <span>Жауапты жіберу</span>
-                </>
-              )}
-            </button>
-          </motion.form>
-        </div>
+            {wishSubmitting ? (
+              <span>Жіберілуде...</span>
+            ) : (
+              <>
+                <Send className="w-4 h-4" />
+                <span>Жіберу</span>
+              </>
+            )}
+          </button>
+        </motion.form>
       </div>
     </section>
   );
