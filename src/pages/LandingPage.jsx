@@ -92,19 +92,19 @@ const LandingPage = ({ onOpenInvitation }) => (
         {/* Top Image with Gradient - Increased height and adjusted gradient */}
         <div className="relative w-full h-64 sm:h-72 mb-6 rounded-3xl overflow-hidden">
           <div
-            className="absolute inset-0 bg-[url('/images/gallery/12.jpeg')] bg-cover bg-center bg-no-repeat scale-105"
+            className="absolute inset-0 bg-[url('/images/Saya/10.JPEG')] bg-cover bg-center bg-no-repeat scale-105"
             style={{
               backgroundPosition: "center 25%",
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/30" />
         </div>
 
         {/* Main Content Card - Adjusted margin and background */}
         <div
-          className="backdrop-blur-[6px] bg-white/95 p-8 sm:p-10 rounded-3xl border border-rose-100/50 
-          shadow-[0_8px_32px_0_rgba(255,228,230,0.37)] 
-          hover:shadow-[0_8px_32px_0_rgba(255,228,230,0.5)] 
+          className="backdrop-blur-[6px] bg-white/40 p-8 sm:p-10 rounded-3xl border border-rose/40 
+          shadow-[0_0px_0px_0_rgba(255,228,230,0.37)] 
+          hover:shadow-[0_8px_0px_0_rgba(255,228,230,0.5)] 
           transition-all duration-500 -mt-16"
         >
           {/* Top Decorative Elements */}
@@ -159,7 +159,7 @@ const LandingPage = ({ onOpenInvitation }) => (
               className="text-center space-y-4 my-8"
             >
               <div className="space-y-3">
-                <h1 className="text-4xl sm:text43xl font-Toy text-gray-800 leading-tight tracking-wide">
+                <h1 className="text-5xl sm:text-4xl font-Toy text-gray-800 leading-tight tracking-wide">
                   {config.data.groomName}
                   <motion.span
                     animate={{ scale: [1, 1.2, 1] }}

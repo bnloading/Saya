@@ -9,28 +9,53 @@ export default function Gallery() {
 
   const images = [
     {
+      id: 1,
+      src: "/images/Saya/11.jpg",
+      alt: "Сурет-1",
+      description: "Сурет-1",
+      style: { objectFit: "cover", aspectRatio: "16/9" },
+    },
+    {
       id: 2,
-      src: "/images/gallery/12.jpeg",
-      alt: "Той суреті 2",
-      description: "Сурет 2",
+      src: "/images/Saya/2.JPEG",
+      alt: "Сурет-2",
+      description: "Сурет-2",
+      style: { objectFit: "cover", aspectRatio: "16/9" },
     },
     {
       id: 3,
-      src: "/images/gallery/12.jpeg",
-      alt: "Той суреті 3",
-      description: "Сурет 3",
+      src: "/images/Saya/3.JPEG",
+      alt: "Сурет-3",
+      description: "Сурет-3",
+      style: { objectFit: "cover", aspectRatio: "16/9" },
     },
     {
       id: 4,
-      src: "/images/gallery/12.jpeg",
-      alt: "Той суреті 4",
-      description: "Сурет 4",
+      src: "/images/Saya/8.JPEG",
+      alt: "Сурет-4",
+      description: "Сурет-4",
+      style: { objectFit: "cover", aspectRatio: "16/9" },
     },
     {
       id: 5,
-      src: "/images/gallery/12.jpeg",
-      alt: "Той суреті 5",
-      description: "Сурет 5",
+      src: "/images/Saya/9.JPEG",
+      alt: "Сурет-5",
+      description: "Сурет-5",
+      style: { objectFit: "cover", aspectRatio: "16/9" },
+    },
+    {
+      id: 6,
+      src: "/images/Saya/12.jpg",
+      alt: "Сурет-6",
+      description: "Сурет-6",
+      style: { objectFit: "contain", maxHeight: "100%", width: "100%" },
+    },
+    {
+      id: 7,
+      src: "/images/Saya/13.jpg",
+      alt: "Сурет-7",
+      description: "Сурет-7",
+      style: { objectFit: "cover", aspectRatio: "16/9" },
     },
   ];
 
@@ -85,22 +110,31 @@ export default function Gallery() {
 
         {/* Carousel */}
         <div className="relative max-w-4xl mx-auto">
-          <div className="overflow-hidden rounded-2xl">
+          <div className="overflow-hidden rounded-2xl bg-black">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              className="relative aspect-[16/9]"
+              className="relative w-full"
             >
-              <img
-                src={images[currentIndex].src}
-                alt={images[currentIndex].alt}
-                className="w-full h-full object-cover cursor-pointer transition-all duration-300"
-                onClick={() => openModal(images[currentIndex])}
-              />
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                <p className="text-white text-center">
-                  {images[currentIndex].description}
-                </p>
+              <div
+                className="relative"
+                style={{
+                  paddingTop: currentIndex === 5 ? "100%" : "56.25%", // Adjust container height for image 6
+                }}
+              >
+                <img
+                  src={images[currentIndex].src}
+                  alt={images[currentIndex].alt}
+                  className={`absolute inset-0 w-full h-full transition-all duration-300 ${
+                    currentIndex === 5 ? "object-contain" : "object-cover"
+                  }`}
+                  onClick={() => openModal(images[currentIndex])}
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                  <p className="text-white text-center">
+                    {images[currentIndex].description}
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -143,11 +177,13 @@ export default function Gallery() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
           >
-            <motion.div className="relative max-w-5xl w-full">
+            <motion.div className="relative max-w-5xl w-full h-[80vh] flex items-center justify-center">
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="w-full h-auto object-cover rounded-lg"
+                className={`max-h-full w-auto rounded-lg ${
+                  selectedImage.id === 6 ? "object-contain" : "object-cover"
+                }`}
               />
               <button
                 onClick={() => setIsModalOpen(false)}

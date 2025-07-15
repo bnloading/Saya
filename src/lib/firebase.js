@@ -8,13 +8,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA5obZaBDamf-i1mBk5EjYEv5UsBkH9phU",
-  authDomain: "comments-71032.firebaseapp.com",
-  projectId: "comments-71032",
-  storageBucket: "comments-71032.firebasestorage.app",
-  messagingSenderId: "267433179205",
-  appId: "1:267433179205:web:33b4495ca5321d7ae70b2c",
-  measurementId: "G-1X48XERN3J",
+  apiKey: "AIzaSyDN_HPzbKc_eLjbCEqoLuzGECbYoFhuOwk",
+  authDomain: "saya-24ec4.firebaseapp.com",
+  projectId: "saya-24ec4",
+  storageBucket: "saya-24ec4.firebasestorage.app",
+  messagingSenderId: "864275314522",
+  appId: "1:864275314522:web:2941818dbd6a9cd7506563",
+  measurementId: "G-YLK41QNRWW",
 };
 
 const app = initializeApp(firebaseConfig);

@@ -22,6 +22,7 @@ import MainContent from "@/pages/MainContent";
 import LandingPage from "@/pages/LandingPage";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import config from "@/config/config";
+import BackgroundSlider from "@/components/BackgroundSlider";
 
 /**
  * App component serves as the root of the application.
@@ -93,11 +94,18 @@ function App() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-b from-rose-50 via-white to-rose-50 relative overflow-hidden">
-        {/* Decorative Background */}
-        <div className="fixed inset-0 bg-[url('/images/bg-pattern.png')] opacity-5 pointer-events-none" />
-        <div className="fixed top-0 right-0 w-1/3 h-1/3 bg-gradient-to-b from-rose-200/20 to-transparent rounded-full blur-3xl transform translate-x-1/4 -translate-y-1/4" />
-        <div className="fixed bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-t from-pink-200/20 to-transparent rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4" />
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Single Background Image */}
+        <div className="fixed inset-0 z-0">
+          <div
+            className="absolute inset-0 bg-[url('/images/Saya/10.JPEG')] bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundPosition: "center center",
+            }}
+          />
+          {/* Overlay for better readability */}
+          <div className="absolute inset-0 bg-white/80" />
+        </div>
 
         <AnimatePresence mode="wait">
           {!isInvitationOpen ? (

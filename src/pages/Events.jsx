@@ -5,12 +5,12 @@ import config from "@/config/config";
 import { useState } from "react";
 
 // Custom Calendar Component
-const CustomCalendar = ({ markedDate = 3 }) => {
+const CustomCalendar = ({ markedDate = 28 }) => {
   const year = 2025;
-  const month = "тамыз";
+  const month = "шілде";
   const daysOfWeek = ["жс", "дс", "сс", "ср", "бс", "жм", "сн"];
   const daysInMonth = 31;
-  const firstDayOfWeek = 5; // August 1st, 2025 is a Friday
+  const firstDayOfWeek = 2; // July 1st, 2025 is a Tuesday
 
   const renderCalendarDays = () => {
     const days = [];
@@ -67,7 +67,7 @@ const CustomCalendar = ({ markedDate = 3 }) => {
 };
 
 export default function Events() {
-  const [date] = useState(new Date(2025, 6, 2)); // 2 шілде 2025 (month is 0-indexed)
+  const [date] = useState(new Date(2025, 7, 28)); // 27 шілде 2025 (month is 0-indexed)
 
   return (
     <>
@@ -96,9 +96,7 @@ export default function Events() {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
               className="inline-block text-rose-500 font-cormorant text-lg tracking-wide mb-2"
-            >
-              Маңызды күнді белгілеңіз
-            </motion.span>
+            ></motion.span>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -106,9 +104,12 @@ export default function Events() {
               className="text-2xl sm:text-3xl font-monserrat text-rose-600 mb-4"
             >
               <h1 className="font-Toy text-4xl">Той иелері:</h1>
-              <br /> Әкесі: Өмірбек
-              <br />
-              Анасы: Алтынгүл
+              <p className=" text-2xl font-cormorant text-gray-800 ">
+                {" "}
+                <br /> АТА-АНАСЫ: АҒЖАН, ЖАЙНАГҮЛ
+                <br />
+                АҒА-ЖЕҢГЕСI: МАҒЖАН, ƟМIРГҮЛ
+              </p>
             </motion.div>
 
             <motion.h2
@@ -141,7 +142,7 @@ export default function Events() {
               className="flex justify-center my-8"
             >
               <div className="rounded-3xl shadow-xl bg-white/80 p-6 border border-rose-100 backdrop-blur-md">
-                <CustomCalendar markedDate={3} />
+                <CustomCalendar markedDate={28} />
               </div>
             </motion.div>
 

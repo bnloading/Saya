@@ -49,16 +49,6 @@ export default function Location() {
             viewport={{ once: true }}
             className="text-center space-y-4 mb-16"
           >
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-              className="inline-block text-rose-500 font-medium font-montserrat"
-            >
-              Өтетін орны
-            </motion.span>
-
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
