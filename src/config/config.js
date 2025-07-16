@@ -1,11 +1,11 @@
 // Nanti convert ke Bahasa Indonesia
 const config = {
   data: {
-    title: "Ержан & Сая  той салтанаты",
+    title: "Ержан & Жансая  той салтанаты",
     description:
       "Біз үйленеміз және сізді осы қуанышты сәтті бізбен бірге тойлауға шақырамыз.",
     groomName: "Ержан",
-    brideName: "Сая",
+    brideName: "Жансая",
     parentGroom: "Әкесі Ағжан",
     parentBride: "Анасы Жайнагүл",
     date: "2025-07-28",
