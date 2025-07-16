@@ -33,18 +33,6 @@ const config = {
       autoplay: true,
       loop: true,
     },
-    banks: [
-      {
-        bank: "Қазақстан Халық Банкі",
-        accountNumber: "KZ1234567890",
-        accountName: "Қуат & Айсұлу",
-      },
-      {
-        bank: "Kaspi Bank",
-        accountNumber: "KZ0987654321",
-        accountName: "Қуат & Айсұлу",
-      },
-    ],
 
     // Web sharing images
     shareImages: {

@@ -39,7 +39,7 @@ const BackgroundSlider = () => {
             }}
           />
           <div className="absolute inset-0 bg-white/90" />
-          <div className="absolute inset-0 bg-gradient-to-b from-rose-50/50 via-white/50 to-rose-50/50" />
+          <div className="absolute inset-0 bg-gray-100/50" />
         </motion.div>
       </AnimatePresence>
     </>

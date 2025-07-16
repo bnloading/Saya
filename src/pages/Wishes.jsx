@@ -10,6 +10,7 @@ import {
   serverTimestamp,
   onSnapshot,
 } from "firebase/firestore";
+import SectionSeparator from "@/components/SectionSeparator";
 
 export default function Wishes() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -114,7 +115,7 @@ export default function Wishes() {
   };
 
   return (
-    <section id="wishes" className="min-h-screen py-20 px-4">
+    <section id="wishes" className="min-h-screen py-20 px-4 bg-gray-100">
       <div className="max-w-3xl mx-auto">
         {/* Error */}
         {error && (
@@ -146,10 +147,10 @@ export default function Wishes() {
                 exit={{ opacity: 0, x: -50 }}
                 className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
               >
-                <div className="font-medium text-gray-800 mb-2">
+                <div className="font-medium text-gray-900 mb-2">
                   {comments[currentIndex].userName}
                 </div>
-                <div className="text-gray-600 mb-3">
+                <div className="text-gray-700 mb-3">
                   {comments[currentIndex].comment}
                 </div>
                 <div className="text-sm text-gray-400">
@@ -187,7 +188,7 @@ export default function Wishes() {
         >
           {/* Name */}
           <div className="space-y-1">
-            <label className="text-sm text-gray-700">Сіздің атыңыз</label>
+            <label className="text-sm text-gray-800">Сіздің атыңыз</label>
             <input
               type="text"
               value={userName}
@@ -200,7 +201,7 @@ export default function Wishes() {
 
           {/* Wish */}
           <div className="space-y-1">
-            <label className="text-sm text-gray-700">Тілегіңіз</label>
+            <label className="text-sm text-gray-800">Тілегіңіз</label>
             <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
@@ -274,8 +275,8 @@ export default function Wishes() {
                 key={option.value}
                 className={`relative group cursor-pointer flex flex-col items-center justify-center rounded-xl border px-6 py-6 transition-all duration-200 ${
                   rsvpStatus === option.value
-                    ? "border-rose-500 bg-rose-50 shadow-md text-rose-600"
-                    : "border-gray-200 bg-white hover:border-rose-300 hover:shadow"
+                    ? "border-gray-500 bg-gray-50 shadow-md text-gray-600"
+                    : "border-gray-200 bg-white hover:border-gray-300 hover:shadow"
                 }`}
               >
                 <input
@@ -296,7 +297,7 @@ export default function Wishes() {
           <button
             type="submit"
             disabled={wishSubmitting}
-            className="w-full bg-rose-500 text-white px-6 py-3 rounded-lg hover:bg-rose-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {wishSubmitting ? (
               <span>Жіберілуде...</span>
@@ -309,6 +310,8 @@ export default function Wishes() {
           </button>
         </motion.form>
       </div>
+
+      {/* Section Separator */}
     </section>
   );
 }

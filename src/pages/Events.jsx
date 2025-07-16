@@ -3,14 +3,15 @@ import { Heart } from "lucide-react";
 import EventCards from "@/components/EventsCard";
 import config from "@/config/config";
 import { useState } from "react";
+import SectionSeparator from "@/components/SectionSeparator";
 
-// Custom Calendar Component
+// Simple Custom Calendar Component
 const CustomCalendar = ({ markedDate = 28 }) => {
   const year = 2025;
   const month = "шілде";
-  const daysOfWeek = ["жс", "дс", "сс", "ср", "бс", "жм", "сн"];
+  const daysOfWeek = ["Дүй", "Сей", "Сәр", "Бей", "Жұм", "Сен", "Жек"];
   const daysInMonth = 31;
-  const firstDayOfWeek = 2; // July 1st, 2025 is a Tuesday
+  const firstDayOfWeek = 2; // July 1st, 2025 starts on Tuesday
 
   const renderCalendarDays = () => {
     const days = [];
@@ -25,17 +26,7 @@ const CustomCalendar = ({ markedDate = 28 }) => {
       const isMarked = day === markedDate;
       days.push(
         <div key={day} className={`calendar-day ${isMarked ? "marked" : ""}`}>
-          {isMarked ? (
-            <div className="flex flex-col items-center">
-              <Heart
-                className="w-4 h-4 text-rose-500 mb-1"
-                fill="currentColor"
-              />
-              <span className="text-xs">{day}</span>
-            </div>
-          ) : (
-            day
-          )}
+          <span>{day}</span>
         </div>
       );
     }
@@ -45,12 +36,6 @@ const CustomCalendar = ({ markedDate = 28 }) => {
 
   return (
     <div className="calendar-container">
-      <div className="calendar-header">
-        <h2 className="font-cormorant text-xl text-rose-700 mb-4">
-          {month} {year} жыл
-        </h2>
-      </div>
-
       <div className="calendar-grid">
         {/* Days of week header */}
         {daysOfWeek.map((day, index) => (
@@ -73,7 +58,7 @@ export default function Events() {
     <>
       <section
         id="event"
-        className="min-h-screen relative overflow-hidden bg-gradient-to-br from-rose-50 via-white to-pink-50"
+        className="min-h-screen relative overflow-hidden bg-gray-100"
       >
         <motion.div
           initial={{ opacity: 0 }}
@@ -95,20 +80,32 @@ export default function Events() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="inline-block text-rose-500 font-cormorant text-lg tracking-wide mb-2"
+              className="inline-block text-gray-500 font-cormorant text-lg tracking-wide mb-2"
             ></motion.span>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-2xl sm:text-3xl font-monserrat text-rose-600 mb-4"
+              className="text-2xl sm:text-3xl font-monserrat text-gray-600 mb-4"
             >
-              <h1 className="font-Toy text-4xl">Той иелері:</h1>
-              <p className=" text-2xl font-cormorant text-gray-800 ">
-                {" "}
-                <br /> АТА-АНАСЫ: АҒЖАН, ЖАЙНАГҮЛ
+              <h1 className="font-Toy text-4xl text-gray-800">Той иелері:</h1>
+              <p className="text-2xl font-monserrat text-gray-900">
                 <br />
-                АҒА-ЖЕҢГЕСI: МАҒЖАН, ƟМIРГҮЛ
+                <span className="italic font-semibold text-gray-800 text-lg">
+                  АТА-АНАСЫ:
+                </span>
+                <br />
+                <span className="font-cormorant text-2xl text-gray-700">
+                  АҒЖАН, ЖАЙНАГҮЛ
+                </span>
+                <br />
+                <span className="italic font-semibold text-gray-800 text-lg">
+                  АҒА-ЖЕҢГЕСІ:
+                </span>
+                <br />
+                <span className="font-cormorant text-2xl text-gray-700">
+                  МАҒЖАН, ӨМІРҒҰЛ
+                </span>
               </p>
             </motion.div>
 
@@ -117,7 +114,7 @@ export default function Events() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-4xl md:text-5xl font-cormorant font-semibold text-gray-800 leading-tight tracking-wide"
+              className="text-4xl md:text-5xl font-cormorant font-semibold text-gray-900 leading-tight tracking-wide"
             >
               Той салтанатының бағдарламасы
             </motion.h2>
@@ -127,7 +124,7 @@ export default function Events() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="text-gray-500 max-w-md mx-auto font-montserrat text-base leading-relaxed"
+              className="text-gray-600 max-w-md mx-auto font-montserrat text-base leading-relaxed"
             >
               Біз сіздерді махаббат жолымыздың басталуының куәгері болуға
               шақырамыз
@@ -141,7 +138,7 @@ export default function Events() {
               transition={{ delay: 0.5 }}
               className="flex justify-center my-8"
             >
-              <div className="rounded-3xl shadow-xl bg-white/80 p-6 border border-rose-100 backdrop-blur-md">
+              <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
                 <CustomCalendar markedDate={28} />
               </div>
             </motion.div>
@@ -154,11 +151,11 @@ export default function Events() {
               transition={{ delay: 0.6 }}
               className="flex items-center justify-center gap-4 mt-6"
             >
-              <div className="h-[1px] w-12 bg-rose-200" />
+              <div className="h-[1px] w-12 bg-gray-200" />
               <div className="text-rose-400">
                 <Heart className="w-4 h-4" fill="currentColor" />
               </div>
-              <div className="h-[1px] w-12 bg-rose-200" />
+              <div className="h-[1px] w-12 bg-gray-200" />
             </motion.div>
           </motion.div>
 
@@ -175,72 +172,64 @@ export default function Events() {
         </motion.div>
       </section>
 
+      {/* Section Separator */}
+      <SectionSeparator variant="default" />
+
       {/* Custom Calendar Styles */}
       <style jsx>{`
         .calendar-container {
-          max-width: 350px;
+          max-width: 320px;
           margin: 0 auto;
-          font-family: inherit;
         }
 
         .calendar-grid {
           display: grid;
           grid-template-columns: repeat(7, 1fr);
-          gap: 2px;
+          gap: 8px;
         }
 
         .calendar-day-header {
-          background-color: rgb(244 63 94 / 0.1);
-          padding: 8px;
+          background: #f8f9fa;
+          padding: 8px 4px;
           text-align: center;
           font-weight: 600;
-          font-size: 14px;
-          color: rgb(244 63 94);
+          font-size: 13px;
+          color: #6c757d;
           border-radius: 8px;
-          margin-bottom: 4px;
+          margin-bottom: 8px;
         }
 
         .calendar-day {
-          padding: 8px;
+          padding: 12px 8px;
           text-align: center;
           min-height: 40px;
           display: flex;
           align-items: center;
           justify-content: center;
-          background-color: white;
+          background: #ffffff;
           border-radius: 8px;
-          font-size: 14px;
-          color: rgb(75 85 99);
-          transition: all 0.2s ease;
+          font-size: 16px;
+          font-weight: 500;
+          color: #495057;
+          border: 1px solid #e9ecef;
         }
 
         .calendar-day.empty {
-          background-color: transparent;
+          background: transparent;
+          border: none;
         }
 
         .calendar-day.marked {
-          background-color: rgb(244 63 94 / 0.1);
-          font-weight: bold;
-          color: rgb(244 63 94);
-          border: 2px solid rgb(244 63 94 / 0.3);
-          transform: scale(1.05);
-          animation: heartbeat 1.5s ease-in-out infinite;
+          background: linear-gradient(135deg, #6b7280, #4b5563);
+          color: white;
+          font-weight: 700;
+          border: none;
+          box-shadow: 0 4px 12px rgba(75, 85, 99, 0.3);
         }
 
         .calendar-day:hover:not(.empty):not(.marked) {
-          background-color: rgb(244 63 94 / 0.05);
-          cursor: pointer;
-          transform: scale(1.02);
-        }
-
-        @keyframes heartbeat {
-          0%,
-          100% {
-            transform: scale(1.05);
-          }
-          50% {
-            transform: scale(1.1);
-          }
+          background: #f8f9fa;
+          border-color: #dee2e6;
         }
       `}</style>
     </>

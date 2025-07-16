@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { formatEventDate } from "@/lib/formatEventDate";
+import SectionSeparator from "@/components/SectionSeparator";
 
 const Map = () => {
   return (
@@ -39,7 +40,10 @@ export default function Location() {
   return (
     <>
       {/* Location section */}
-      <section id="location" className="min-h-screen relative overflow-hidden">
+      <section
+        id="location"
+        className="min-h-screen relative overflow-hidden bg-gray-100"
+      >
         <div className="container mx-auto px-4 py-20 relative z-10">
           {/* Section Header */}
           <motion.div
@@ -54,7 +58,7 @@ export default function Location() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-serif text-gray-800 font-montserrat"
+              className="text-4xl md:text-5xl font-serif text-gray-900 font-montserrat"
             >
               Мекенжай
             </motion.h2>
@@ -95,21 +99,21 @@ export default function Location() {
               className="space-y-6"
             >
               <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-                <h3 className="text-2xl  text-gray-800 mb-6 font-montserrat">
+                <h3 className="text-2xl  text-gray-900 mb-6 font-montserrat">
                   {config.data.location}
                 </h3>
 
                 <div className="space-y-4">
                   <div className="flex items-start space-x-4">
                     <MapPin className="w-5 h-5 text-rose-500 mt-1" />
-                    <p className="text-gray-600 flex-1 font-montserrat">
+                    <p className="text-gray-700 flex-1 font-montserrat">
                       {config.data.address}
                     </p>
                   </div>
 
                   <div className="flex items-center space-x-4">
                     <CalendarCheck className="w-5 h-5 text-rose-500" />
-                    <p className="text-gray-600">
+                    <p className="text-gray-700">
                       {formatEventDate(config.data.date)}
                     </p>
                   </div>
@@ -123,7 +127,7 @@ export default function Location() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       viewport={{ once: true }}
-                      className="w-full flex items-center justify-center gap-1.5 bg-white text-gray-600 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-sm"
+                      className="w-full flex items-center justify-center gap-1.5 bg-white text-gray-700 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-sm"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                       <span className="font-semibold">Картаны көру</span>
@@ -135,6 +139,9 @@ export default function Location() {
           </div>
         </div>
       </section>
+
+      {/* Section Separator */}
+      <SectionSeparator variant="simple" />
     </>
   );
 }

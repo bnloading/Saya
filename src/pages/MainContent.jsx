@@ -1,11 +1,10 @@
 import { motion } from "framer-motion";
 import { Heart, Flower } from "lucide-react";
-import { SectionBackground } from "@/components/SectionBackground";
 import Hero from "@/pages/Hero";
 import Events from "@/pages/Events";
 import Location from "@/pages/Location";
 import Wishes from "@/pages/Wishes";
-import Gallery from "@/pages/Gallery";
+import VideoGallery from "@/components/VideoGallery";
 
 // Animated Background Component
 const AnimatedBackground = () => {
@@ -96,43 +95,28 @@ const AnimatedBackground = () => {
 // Main Invitation Content
 export default function MainContent() {
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <AnimatedBackground />
-      <div className="relative z-10">
-        {/* Each section with consistent background */}
-        <section className="relative min-h-screen">
-          <SectionBackground />
-          <div className="relative z-10">
-            <Hero />
-          </div>
+      <div className="relative z-10 w-full">
+        {/* Each section without background wrappers and margins */}
+        <section className="relative min-h-screen w-full">
+          <Hero />
         </section>
 
-        <section className="relative min-h-screen">
-          <SectionBackground />
-          <div className="relative z-10">
-            <Events />
-          </div>
+        <section className="relative min-h-screen w-full">
+          <Events />
         </section>
 
-        <section className="relative min-h-screen">
-          <SectionBackground />
-          <div className="relative z-10">
-            <Location />
-          </div>
+        <section className="relative min-h-screen w-full">
+          <Location />
         </section>
 
-        <section className="relative min-h-screen">
-          <SectionBackground />
-          <div className="relative z-10">
-            <Wishes />
-          </div>
+        <section className="relative min-h-screen w-full">
+          <VideoGallery />
         </section>
 
-        <section className="relative min-h-screen">
-          <SectionBackground />
-          <div className="relative z-10">
-            <Gallery />
-          </div>
+        <section className="relative min-h-screen w-full">
+          <Wishes />
         </section>
       </div>
     </div>
