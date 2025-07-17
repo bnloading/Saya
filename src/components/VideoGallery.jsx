@@ -62,7 +62,7 @@ const VideoGallery = () => {
     "/images/Saya/8.JPEG",
     "/images/Saya/9.JPEG",
     "/images/Saya/10.JPEG",
-    "/images/Saya/11.jpg",
+
     "/images/Saya/12.jpg",
     "/images/Saya/13.jpg",
   ];
