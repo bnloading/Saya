@@ -3,6 +3,37 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import SectionSeparator from "@/components/SectionSeparator";
 
+// Loading component
+const ImageLoader = ({ src, alt, className, style, onClick }) => {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
+  return (
+    <div className="relative overflow-hidden">
+      {!loaded && !error && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={`${className} ${loaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
+        style={style}
+        loading="lazy"
+        onClick={onClick}
+        onLoad={() => setLoaded(true)}
+        onError={() => setError(true)}
+      />
+      {error && (
+        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-500">
+          Сурет жүктелмеді
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function Gallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -112,7 +143,7 @@ export default function Gallery() {
                     paddingTop: currentIndex === 5 ? "100%" : "56.25%", // Adjust container height for image 6
                   }}
                 >
-                  <img
+                  <ImageLoader
                     src={images[currentIndex].src}
                     alt={images[currentIndex].alt}
                     className={`absolute inset-0 w-full h-full transition-all duration-300 ${
@@ -154,7 +185,7 @@ export default function Gallery() {
               className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
             >
               <motion.div className="relative max-w-5xl w-full h-[80vh] flex items-center justify-center">
-                <img
+                <ImageLoader
                   src={selectedImage.src}
                   alt={selectedImage.alt}
                   className={`max-h-full w-auto rounded-lg ${
