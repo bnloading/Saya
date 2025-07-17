@@ -30,7 +30,7 @@ const Map = () => {
         rel="noopener noreferrer"
         className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg hover:bg-white transition-colors"
       >
-        <span className="text-rose-600 text-sm font-medium">Google Maps</span>
+        <span className="text-gray-700 text-sm font-medium">Google Maps</span>
       </a>
     </div>
   );
@@ -71,9 +71,9 @@ export default function Location() {
               viewport={{ once: true }}
               className="flex items-center justify-center gap-4 pt-4"
             >
-              <div className="h-[1px] w-12 bg-rose-200" />
-              <MapPin className="w-5 h-5 text-rose-400" />
-              <div className="h-[1px] w-12 bg-rose-200" />
+              <div className="h-[1px] w-12 bg-gray-300" />
+              <MapPin className="w-5 h-5 text-gray-600" />
+              <div className="h-[1px] w-12 bg-gray-300" />
             </motion.div>
           </motion.div>
 
@@ -105,14 +105,14 @@ export default function Location() {
 
                 <div className="space-y-4">
                   <div className="flex items-start space-x-4">
-                    <MapPin className="w-5 h-5 text-rose-500 mt-1" />
+                    <MapPin className="w-5 h-5 text-gray-600 mt-1" />
                     <p className="text-gray-700 flex-1 font-montserrat">
                       {config.data.address}
                     </p>
                   </div>
 
                   <div className="flex items-center space-x-4">
-                    <CalendarCheck className="w-5 h-5 text-rose-500" />
+                    <CalendarCheck className="w-5 h-5 text-gray-600" />
                     <p className="text-gray-700">
                       {formatEventDate(config.data.date)}
                     </p>

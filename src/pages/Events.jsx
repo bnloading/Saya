@@ -104,7 +104,7 @@ export default function Events() {
                 </span>
                 <br />
                 <span className="font-cormorant text-2xl text-gray-700">
-                  МАҒЖАН, ӨМІРҒҰЛ
+                  МАҒЖАН, ӨМІРГҮЛ
                 </span>
               </p>
             </motion.div>
@@ -152,7 +152,7 @@ export default function Events() {
               className="flex items-center justify-center gap-4 mt-6"
             >
               <div className="h-[1px] w-12 bg-gray-200" />
-              <div className="text-rose-400">
+              <div className="text-gray-600">
                 <Heart className="w-4 h-4" fill="currentColor" />
               </div>
               <div className="h-[1px] w-12 bg-gray-200" />

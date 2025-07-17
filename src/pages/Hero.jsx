@@ -104,10 +104,10 @@ export default function Hero() {
             <Heart
               className={`w-${Math.floor(Math.random() * 2) + 8} h-${Math.floor(Math.random() * 2) + 8} ${
                 i % 3 === 0
-                  ? "text-rose-400"
+                  ? "text-gray-500"
                   : i % 3 === 1
-                    ? "text-pink-400"
-                    : "text-red-400"
+                    ? "text-gray-600"
+                    : "text-gray-700"
               }`}
               fill="currentColor"
             />
@@ -279,12 +279,12 @@ export default function Hero() {
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.6 }}
-                        className="text-x sm:text-4xl font-Toy bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-pink-600 leading-relaxed tracking-wide font-semibold"
+                        className="text-4xl sm:text-4xl font-Toy text-black leading-relaxed tracking-wide font-bold"
                       >
                         {config.data.groomName}
                         <span className="inline-block mx-4">
                           <Heart
-                            className="w-8 h-8 sm:w-12 sm:h-12 text-rose-400 inline"
+                            className="w-8 h-8 sm:w-12 sm:h-12 text-red-500 inline"
                             fill="currentColor"
                           />
                         </span>
@@ -294,7 +294,7 @@ export default function Hero() {
                     Үйлену тойына арналған салтанатты дастарханымыздың қадірлі
                     қонағы болуға шақырамыз!
                   </p>
-                  <p className="text-2xl text-rose-600 font-cormorant font-semibold">
+                  <p className="text-2xl text-gray-700 font-cormorant font-semibold">
                     {guestName ? guestName : ""}
                   </p>
                 </motion.div>

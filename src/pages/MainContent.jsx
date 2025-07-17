@@ -39,12 +39,12 @@ const AnimatedBackground = () => {
               Math.floor(Math.random() * 3) + 5
             } ${
               i % 4 === 0
-                ? "text-rose-200"
+                ? "text-gray-300"
                 : i % 4 === 1
-                  ? "text-pink-200"
+                  ? "text-gray-400"
                   : i % 4 === 2
-                    ? "text-red-200"
-                    : "text-rose-300"
+                    ? "text-gray-500"
+                    : "text-gray-600"
             }`}
             fill="currentColor"
           />
@@ -80,10 +80,10 @@ const AnimatedBackground = () => {
               Math.floor(Math.random() * 3) + 4
             } ${
               i % 3 === 0
-                ? "text-rose-200"
+                ? "text-gray-300"
                 : i % 3 === 1
-                  ? "text-pink-200"
-                  : "text-red-200"
+                  ? "text-gray-400"
+                  : "text-gray-500"
             }`}
           />
         </motion.div>

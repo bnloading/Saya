@@ -59,7 +59,7 @@ export default function Gifts() {
               className="flex items-center justify-center gap-4 pt-4"
             >
               <div className="h-[1px] w-12 bg-gray-200" />
-              <Gift className="w-5 h-5 text-rose-400" />
+              <Gift className="w-5 h-5 text-gray-600" />
               <div className="h-[1px] w-12 bg-gray-200" />
             </motion.div>
 

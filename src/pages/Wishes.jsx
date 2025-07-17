@@ -119,7 +119,7 @@ export default function Wishes() {
       <div className="max-w-3xl mx-auto">
         {/* Error */}
         {error && (
-          <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+          <div className="mb-4 p-4 bg-gray-100 text-gray-700 rounded-lg">
             {error}
           </div>
         )}
