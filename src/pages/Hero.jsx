@@ -6,6 +6,46 @@ import { formatEventDate } from "@/lib/formatEventDate";
 import { safeBase64 } from "@/lib/base64";
 import SectionSeparator from "@/components/SectionSeparator";
 
+// Fast Image Loader for Hero
+const FastImage = ({ src, alt, className, onClick }) => {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setLoaded(true);
+    img.onerror = () => setError(true);
+    img.src = src;
+  }, [src]);
+
+  return (
+    <>
+      {!loaded && !error && (
+        <div className={`${className} bg-gray-300 animate-pulse`} />
+      )}
+      {loaded && (
+        <motion.img
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          src={src}
+          alt={alt}
+          className={className}
+          onClick={onClick}
+          loading="eager"
+        />
+      )}
+      {error && (
+        <div
+          className={`${className} bg-gray-200 flex items-center justify-center`}
+        >
+          <span className="text-gray-500 text-xs">Сурет жүктелмеді</span>
+        </div>
+      )}
+    </>
+  );
+};
+
 export default function Hero() {
   const [guestName, setGuestName] = useState("");
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -204,11 +244,11 @@ export default function Hero() {
               onClick={() => setIsImageModalOpen(true)}
             >
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-500/20 group-hover:opacity-75 transition-opacity  " />
-              <motion.img
+              <FastImage
                 src={config.data.shareImages.couplePhoto}
                 alt={`${config.data.groomName} & ${config.data.brideName}`}
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300 "
-                loading="eager"
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
+                onClick={() => setIsImageModalOpen(true)}
               />
 
               {/* Hover Overlay */}

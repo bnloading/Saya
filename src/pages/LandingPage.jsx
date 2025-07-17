@@ -3,6 +3,59 @@ import config from "@/config/config";
 import { formatEventDate } from "@/lib/formatEventDate";
 import { motion } from "framer-motion";
 import { Calendar, Clock, Heart } from "lucide-react";
+import { useState, useEffect } from "react";
+
+// Image preloader component
+const OptimizedImage = ({ src, alt, className, style, onLoad }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => {
+      setImageLoaded(true);
+      if (onLoad) onLoad();
+    };
+    img.onerror = () => setImageError(true);
+    img.src = src;
+  }, [src, onLoad]);
+
+  return (
+    <div className="relative">
+      {/* Blur placeholder */}
+      {!imageLoaded && !imageError && (
+        <div
+          className={`${className} bg-gray-200`}
+          style={{
+            ...style,
+            backgroundImage: `url("data:image/svg+xml,%3csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100' height='100' fill='%23f3f4f6'/%3e%3c/svg%3e")`,
+            filter: "blur(5px)",
+          }}
+        />
+      )}
+
+      {/* Actual image */}
+      {imageLoaded && (
+        <img
+          src={src}
+          alt={alt}
+          className={`${className} transition-opacity duration-500`}
+          style={style}
+          loading="eager"
+        />
+      )}
+
+      {/* Error fallback */}
+      {imageError && (
+        <div
+          className={`${className} bg-gray-100 flex items-center justify-center`}
+        >
+          <span className="text-gray-500 text-sm">Сурет жүктелмеді</span>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const LandingPage = ({ onOpenInvitation }) => {
   return (
@@ -95,6 +148,7 @@ const LandingPage = ({ onOpenInvitation }) => {
               style={{
                 objectPosition: "center 25%",
               }}
+              loading="eager"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/30" />
           </div>{" "}

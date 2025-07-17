@@ -1,6 +1,36 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
+// Optimized Background Image for Slider
+const SliderImage = ({ src, isActive }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (isActive) {
+      const img = new Image();
+      img.onload = () => setLoaded(true);
+      img.src = src;
+    }
+  }, [src, isActive]);
+
+  return (
+    <>
+      {!loaded && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+      )}
+      {loaded && (
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-[2s]"
+          style={{
+            backgroundImage: `url(${src})`,
+            transform: "scale(1.1)",
+          }}
+        />
+      )}
+    </>
+  );
+};
+
 const BackgroundSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -18,7 +48,7 @@ const BackgroundSlider = () => {
       setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     }, 7000);
     return () => clearInterval(timer);
-  }, []);
+  }, [images.length]);
 
   return (
     <>
@@ -31,13 +61,7 @@ const BackgroundSlider = () => {
           transition={{ duration: 1.5 }}
           className="fixed inset-0"
         >
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-[2s]"
-            style={{
-              backgroundImage: `url(${images[currentIndex]})`,
-              transform: "scale(1.1)",
-            }}
-          />
+          <SliderImage src={images[currentIndex]} isActive={true} />
           <div className="absolute inset-0 bg-white/90" />
           <div className="absolute inset-0 bg-gray-100/50" />
         </motion.div>

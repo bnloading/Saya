@@ -3,6 +3,50 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import SectionSeparator from "@/components/SectionSeparator";
 
+// Optimized Image Component for VideoGallery
+const OptimizedSlideImage = ({ src, isActive }) => {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (isActive) {
+      const img = new Image();
+      img.onload = () => setLoaded(true);
+      img.onerror = () => setError(true);
+      img.src = src;
+    }
+  }, [src, isActive]);
+
+  if (error) {
+    return (
+      <div className="absolute inset-0 bg-gray-200 flex items-center justify-center text-gray-500">
+        Сурет жүктелмеді
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* Fast loading placeholder */}
+      {!loaded && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
+
+      {/* Optimized background image */}
+      {loaded && (
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300"
+          style={{
+            backgroundImage: `url(${src})`,
+          }}
+        />
+      )}
+    </>
+  );
+};
+
 const VideoGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -63,12 +107,7 @@ const VideoGallery = () => {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-6 rounded-3xl overflow-hidden shadow-2xl"
           >
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{
-                backgroundImage: `url(${images[currentIndex]})`,
-              }}
-            />
+            <OptimizedSlideImage src={images[currentIndex]} isActive={true} />
             {/* Subtle gradient overlay for elegance */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-black/5" />
           </motion.div>

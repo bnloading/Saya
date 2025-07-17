@@ -1,33 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import SectionSeparator from "@/components/SectionSeparator";
 
-// Loading component
+// Loading component with better performance
 const ImageLoader = ({ src, alt, className, style, onClick }) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
+  useEffect(() => {
+    // Preload image
+    const img = new Image();
+    img.onload = () => setLoaded(true);
+    img.onerror = () => setError(true);
+    // Start loading immediately
+    img.src = src;
+  }, [src]);
+
   return (
     <div className="relative overflow-hidden">
+      {/* Fast placeholder with base64 blur */}
       {!loaded && !error && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+        <div
+          className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='20' height='20' fill='%23e5e7eb'/%3e%3c/svg%3e")`,
+            backgroundSize: "20px 20px",
+          }}
+        >
+          <div className="w-6 h-6 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
-      <img
-        src={src}
-        alt={alt}
-        className={`${className} ${loaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
-        style={style}
-        loading="lazy"
-        onClick={onClick}
-        onLoad={() => setLoaded(true)}
-        onError={() => setError(true)}
-      />
+
+      {/* Optimized image */}
+      {loaded && (
+        <img
+          src={src}
+          alt={alt}
+          className={`${className} transition-all duration-300`}
+          style={style}
+          onClick={onClick}
+          loading="eager"
+          decoding="async"
+        />
+      )}
+
       {error && (
         <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-500">
-          Сурет жүктелмеді
+          <span className="text-xs">Сурет жүктелмеді</span>
         </div>
       )}
     </div>
