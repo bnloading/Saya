@@ -1,5 +1,6 @@
 // src/components/bottom-bar/BottomBar.jsx
 import React from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { Home, CalendarHeart, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -44,9 +45,9 @@ const BottomBar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, [active]);
 
-  return (
+  const bottomBar = (
     <motion.div
-      className="fixed left-1/2 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-[90] w-full max-w-[430px] -translate-x-1/2 px-4"
+      className="fixed inset-x-0 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-[100] mx-auto w-full max-w-[430px] px-4"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, type: "spring", stiffness: 90, damping: 16 }}
@@ -106,6 +107,10 @@ const BottomBar = () => {
       </div>
     </motion.div>
   );
+
+  if (typeof document === "undefined") return bottomBar;
+
+  return createPortal(bottomBar, document.body);
 };
 
 export default BottomBar;
