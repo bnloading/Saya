@@ -9,14 +9,14 @@ import {
 } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCJ70kalyLpcLqrUEONR1leIGzMVHmmlfc",
-  authDomain: "quatcl-2552a.firebaseapp.com",
-  databaseURL: "https://quatcl-2552a-default-rtdb.firebaseio.com",
-  projectId: "quatcl-2552a",
-  storageBucket: "quatcl-2552a.firebasestorage.app",
-  messagingSenderId: "528327145000",
-  appId: "1:528327145000:web:041d0bac5245a101e3e71d",
-  measurementId: "G-LH7GNE3VLQ",
+  apiKey: "AIzaSyA5obZaBDamf-i1mBk5EjYEv5UsBkH9phU",
+  authDomain: "comments-71032.firebaseapp.com",
+  databaseURL: "https://comments-71032-default-rtdb.firebaseio.com",
+  projectId: "comments-71032",
+  storageBucket: "comments-71032.firebasestorage.app",
+  messagingSenderId: "267433179205",
+  appId: "1:267433179205:web:33b4495ca5321d7ae70b2c",
+  measurementId: "G-1X48XERN3J",
 };
 
 const app = initializeApp(firebaseConfig);
