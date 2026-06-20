@@ -86,10 +86,13 @@ export default function Events() {
               </h1>
               <p className="text-2xl font-monserrat text-gray-900">
                 <br />
-
                 <span className="font-cormorant text-2xl text-gray-700">
                   {config.data.parentGroom}, {config.data.parentBride}
-                </span>
+                </span>{" "}
+                <br />
+                <span className="font-cormorant text-2xl text-gray-700">
+                  Аға-жеңгелері
+                </span>{" "}
               </p>
             </motion.div>
 
