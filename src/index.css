@@ -72,6 +72,13 @@ img {
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "Shelley";
+  src: url("../public/font/_AsylbekM02Shelley.kz_.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -133,5 +140,181 @@ img {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* ============================================================
+   iOS-style glassmorphism + romantic aurora design system
+   ============================================================ */
+
+/* Animated romantic aurora background (placed on the phone frame) */
+.romantic-bg {
+  position: relative;
+  background:
+    radial-gradient(
+      1100px 620px at 8% 6%,
+      rgba(203, 213, 225, 0.5),
+      transparent 60%
+    ),
+    radial-gradient(
+      950px 520px at 96% 14%,
+      rgba(226, 232, 240, 0.5),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 560px at 50% 105%,
+      rgba(203, 213, 225, 0.45),
+      transparent 60%
+    ),
+    linear-gradient(165deg, #f8fafc 0%, #f1f5f9 48%, #f3f4f6 100%);
+  background-size: 160% 160%;
+  animation: gradient-pan 18s ease infinite;
+}
+
+/* Soft floating colour blobs for extra depth */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.55;
+  pointer-events: none;
+  will-change: transform;
+  animation: aurora-float 16s ease-in-out infinite;
+}
+
+/* Frosted glass surfaces (iOS style) */
+.glass {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 10px 40px rgba(120, 80, 160, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(26px) saturate(190%);
+  -webkit-backdrop-filter: blur(26px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 12px 48px rgba(120, 80, 160, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 6px 20px rgba(120, 80, 160, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+/* Animated soft gray text gradient */
+.text-gradient-romantic {
+  background: linear-gradient(120deg, #6b7280, #374151 50%, #9ca3af);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradient-pan 7s ease infinite;
+}
+
+.script-unclipped {
+  display: inline-block;
+  line-height: 1.45;
+  padding-top: 0.18em;
+  padding-bottom: 0.18em;
+  overflow: visible;
+}
+
+/* Shimmering highlight that sweeps across glass */
+.glass-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transform: translateX(-150%);
+  animation: shimmer-x 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes aurora-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(24px, -34px) scale(1.12);
+  }
+  66% {
+    transform: translate(-28px, 22px) scale(0.94);
+  }
+}
+
+@keyframes shimmer-x {
+  0% {
+    transform: translateX(-150%);
+  }
+  60%,
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-float-soft {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .romantic-bg,
+  .aurora-blob,
+  .text-gradient-romantic,
+  .glass-shimmer,
+  .animate-float-soft {
+    animation: none !important;
   }
 }

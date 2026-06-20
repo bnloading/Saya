@@ -123,7 +123,7 @@ export default function Wishes() {
   };
 
   return (
-    <section id="wishes" className="min-h-screen py-20 px-4 bg-gray-100">
+    <section id="wishes" className="min-h-screen py-20 px-4">
       <div className="max-w-3xl mx-auto">
         {error && (
           <div className="mb-4 p-4 bg-gray-100 text-gray-700 rounded-lg">
@@ -304,7 +304,7 @@ export default function Wishes() {
           <button
             type="submit"
             disabled={wishSubmitting}
-            className="w-full bg-gradient-to-r from-fuchsia-600 via-rose-500 to-red-500 text-white px-6 py-3 rounded-2xl shadow-lg shadow-rose-300/40 hover:from-fuchsia-700 hover:via-rose-600 hover:to-red-600 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:shadow-none"
+            className="w-full bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 text-white px-6 py-3 rounded-2xl shadow-lg shadow-gray-400/40 hover:from-gray-800 hover:via-gray-900 hover:to-black transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:shadow-none"
           >
             {wishSubmitting ? (
               <span>{config.data.texts.submitting}</span>

@@ -46,16 +46,17 @@ const BottomBar = () => {
 
   return (
     <motion.div
-      className="fixed bottom-4 transform -translate-x-1/2 z-50 w-full px-4 max-w-[430px]"
+      className="fixed left-1/2 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-[90] w-full max-w-[430px] -translate-x-1/2 px-4"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, type: "spring", stiffness: 90, damping: 16 }}
     >
-      <div className="relative overflow-hidden rounded-[28px] border border-white/45 bg-white/20 px-3 py-2.5 shadow-[0_8px_32px_rgba(17,24,39,0.22)] backdrop-blur-xl supports-[backdrop-filter]:bg-white/15">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/45 via-white/15 to-white/5" />
+      <div className="glass relative overflow-hidden rounded-[28px] px-3 py-2.5">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/50 via-white/10 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 -bottom-6 h-12 bg-gradient-to-r from-gray-300/20 via-gray-300/20 to-gray-300/20 blur-xl" />
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute -inset-y-3 -left-1/3 w-1/3 rounded-full bg-white/35 blur-xl"
+          className="pointer-events-none absolute -inset-y-3 -left-1/3 w-1/3 rounded-full bg-white/40 blur-xl"
           animate={{ x: [0, 420, 0] }}
           transition={{ duration: 8, ease: "linear", repeat: Infinity }}
         />
@@ -68,7 +69,7 @@ const BottomBar = () => {
               onClick={() => setActive(item.id)}
               className={cn(
                 "relative flex flex-1 flex-col items-center justify-center rounded-2xl px-2 py-2 transition-all duration-300",
-                active === item.id ? "text-gray-800" : "text-gray-600",
+                active === item.id ? "text-gray-900" : "text-gray-600",
               )}
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.96 }}
@@ -86,7 +87,7 @@ const BottomBar = () => {
                   "relative z-10 mb-0.5 h-[18px] w-[18px] transition-all duration-300 sm:mb-1 sm:h-5 sm:w-5",
                   active === item.id
                     ? "stroke-gray-800 drop-shadow-[0_1px_2px_rgba(0,0,0,0.12)]"
-                    : "stroke-gray-600",
+                    : "stroke-gray-500",
                 )}
               />
               <span

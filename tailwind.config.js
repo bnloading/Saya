@@ -28,6 +28,7 @@ export default {
         montserrat: ["Montserrat", "sans-serif"],
         messiri: ["El Messiri", "sans-serif"],
         custom: ["CustomFont", "serif"],
+        shelley: ["Shelley", "cursive"],
 
         Just: ["justanotherfont", "sans-serif"],
         Toy: ["KZRosaMarena", "sans-serif"],

@@ -28,7 +28,7 @@ const SectionSeparator = ({ variant = "default" }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="flex items-center justify-center py-16 relative bg-gray-300/30"
+      className="flex items-center justify-center py-16 relative"
     >
       <div className="flex items-center gap-6">
         {/* Left decorative line */}
@@ -67,7 +67,7 @@ const SectionSeparator = ({ variant = "default" }) => {
             className="relative"
           >
             <div className="absolute inset-0 bg-gray-400 rounded-full blur-md opacity-50" />
-            <div className="relative bg-gray-100 rounded-full p-3 shadow-lg border border-gray-200">
+            <div className="glass relative rounded-full p-3">
               {currentVariant.icon}
             </div>
           </motion.div>

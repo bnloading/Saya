@@ -72,7 +72,7 @@ const LandingPage = ({ onOpenInvitation }) => {
           className="absolute inset-0  bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url("${config.data.media.landingBackground}")`,
-            backgroundPosition: "center 25%",
+            backgroundPosition: "center top",
           }}
         />
 
@@ -127,7 +127,7 @@ const LandingPage = ({ onOpenInvitation }) => {
       <div
         className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 "
         style={{
-          backgroundPosition: "center 25%",
+          backgroundPosition: "center top",
         }}
       >
         {/* Gradient Overlay for Content Readability */}
@@ -147,7 +147,7 @@ const LandingPage = ({ onOpenInvitation }) => {
               alt={config.data.title}
               className="absolute inset-0 w-full h-[100%] object-cover scale-105"
               style={{
-                objectPosition: "center 55%",
+                objectPosition: "center top",
               }}
               loading="eager"
             />
@@ -217,7 +217,7 @@ const LandingPage = ({ onOpenInvitation }) => {
               >
                 <div className="space-y-3">
                   <div className="flex flex-col items-center gap-1">
-                    <h1 className="text-5xl sm:text-6xl font-custom text-gray-900 leading-tight tracking-wide">
+                    <h1 className="text-5xl sm:text-6xl font-shelley text-gray-900 leading-tight tracking-wide">
                       {config.data.groomName}
                     </h1>
                     <motion.span
@@ -227,7 +227,7 @@ const LandingPage = ({ onOpenInvitation }) => {
                     >
                       ♥
                     </motion.span>
-                    <h1 className="text-5xl sm:text-6xl font-custom text-gray-900 leading-tight tracking-wide">
+                    <h1 className="text-5xl sm:text-6xl font-shelley text-gray-900 leading-tight tracking-wide">
                       {config.data.brideName}
                     </h1>
                   </div>
@@ -246,7 +246,7 @@ const LandingPage = ({ onOpenInvitation }) => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={onOpenInvitation}
-                  className="group relative w-full bg-gradient-to-r from-fuchsia-600 via-rose-500 to-red-500 text-white px-8 py-4 rounded-2xl font-medium shadow-xl shadow-rose-300/40 hover:shadow-fuchsia-300/40 transition-all duration-300 hover:from-fuchsia-700 hover:via-rose-600 hover:to-red-600"
+                  className="group relative w-full bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 text-white px-8 py-4 rounded-2xl font-medium shadow-xl shadow-gray-400/40 hover:shadow-gray-500/40 transition-all duration-300 hover:from-gray-800 hover:via-gray-900 hover:to-black"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2 text-lg">
                     <span>{config.data.texts.invitationButton}</span>

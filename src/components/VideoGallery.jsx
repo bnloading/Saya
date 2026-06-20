@@ -86,7 +86,7 @@ const VideoGallery = () => {
     <>
       <section
         id="video-gallery"
-        className="min-h-screen relative overflow-hidden bg-gray-100 p-6"
+        className="min-h-screen relative overflow-hidden p-6"
       >
         {/* Background Image with padding and border radius */}
         <AnimatePresence initial={false}>

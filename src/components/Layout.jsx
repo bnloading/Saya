@@ -173,13 +173,35 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+    <div className="relative min-h-screen w-full bg-gradient-to-br from-[#f1f5f9] via-[#f3f4f6] to-[#eef2f6] flex items-center justify-center">
       <motion.div
-        className="mx-auto w-full max-w-[430px] min-h-screen bg-white relative overflow-hidden border border-gray-200 shadow-lg"
+        className="romantic-bg mx-auto w-full max-w-[430px] min-h-screen relative overflow-hidden border border-white/40 shadow-[0_20px_60px_rgba(150,110,180,0.25)]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
+        {/* Floating colour blobs for depth */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div
+            className="aurora-blob h-56 w-56 -left-10 -top-10"
+            style={{ background: "rgba(203,213,225,0.55)" }}
+          />
+          <div
+            className="aurora-blob h-64 w-64 -right-16 top-1/3"
+            style={{
+              background: "rgba(226,232,240,0.5)",
+              animationDelay: "3s",
+            }}
+          />
+          <div
+            className="aurora-blob h-60 w-60 left-1/4 bottom-0"
+            style={{
+              background: "rgba(203,213,225,0.5)",
+              animationDelay: "6s",
+            }}
+          />
+        </div>
+
         {/* Music Control Button with Status Indicator */}
         <motion.button
           initial={{ scale: 0 }}
@@ -187,19 +209,21 @@ const Layout = ({ children }) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={toggleMusic}
-          className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg border border-rose-100/50"
+          className="glass-pill fixed top-4 right-4 z-50 p-3 rounded-full text-gray-600"
         >
           {isPlaying ? (
             <div className="relative">
-              <PauseCircle className="w-6 h-6 text-rose-500" />
+              <PauseCircle className="w-6 h-6 text-gray-600" />
               <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             </div>
           ) : (
-            <PlayCircle className="w-6 h-6 text-rose-500" />
+            <PlayCircle className="w-6 h-6 text-gray-600" />
           )}
         </motion.button>
 
-        <main className="relative h-full w-full pb-[100px]">{children}</main>
+        <main className="relative z-10 h-full w-full pb-[100px]">
+          {children}
+        </main>
         <BottomBar />
         {/* Music Info Toast */}
         <AnimatePresence>
@@ -211,8 +235,8 @@ const Layout = ({ children }) => {
               transition={{ duration: 0.3 }}
               className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-50"
             >
-              <div className="bg-black/80 text-white transform -translate-x-1/2 px-4 py-2 rounded-full backdrop-blur-sm flex items-center space-x-2">
-                <Music className="w-4 h-4 animate-pulse" />
+              <div className="glass-pill text-gray-800 transform -translate-x-1/2 px-4 py-2 rounded-full flex items-center space-x-2">
+                <Music className="w-4 h-4 animate-pulse text-gray-600" />
                 <span className="text-sm whitespace-nowrap">
                   {config.data.audio.title}
                 </span>

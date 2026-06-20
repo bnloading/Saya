@@ -28,7 +28,7 @@ const Map = () => {
         href={config.data.maps_url}
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg hover:bg-white transition-colors"
+        className="glass-pill absolute bottom-4 right-4 px-4 py-2 rounded-full hover:bg-white/70 transition-colors"
       >
         <span className="text-gray-700 text-sm font-medium">Google Maps</span>
       </a>
@@ -40,10 +40,7 @@ export default function Location() {
   return (
     <>
       {/* Location section */}
-      <section
-        id="location"
-        className="min-h-screen relative overflow-hidden bg-gray-100"
-      >
+      <section id="location" className="min-h-screen relative overflow-hidden">
         <div className="container mx-auto px-4 py-20 relative z-10">
           {/* Section Header */}
           <motion.div
@@ -58,7 +55,7 @@ export default function Location() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-serif text-gray-900 font-montserrat"
+              className="text-4xl md:text-5xl font-serif text-gradient-romantic font-montserrat"
             >
               {config.data.texts.locationTitle}
             </motion.h2>
@@ -85,7 +82,7 @@ export default function Location() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg border-8 border-white bg-white"
+              className="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white/70 bg-white/40"
             >
               <Map />
             </motion.div>
@@ -98,7 +95,7 @@ export default function Location() {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <div className="glass-card rounded-2xl p-8">
                 <h3 className="text-2xl  text-gray-900 mb-6 font-montserrat">
                   {config.data.location}
                 </h3>
@@ -131,7 +128,7 @@ export default function Location() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       viewport={{ once: true }}
-                      className="w-full flex items-center justify-center gap-1.5 bg-white text-gray-700 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-sm"
+                      className="w-full flex items-center justify-center gap-1.5 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 text-white px-4 py-2.5 rounded-xl shadow-lg shadow-gray-400/40 hover:brightness-110 transition-all text-sm"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                       <span className="font-semibold">

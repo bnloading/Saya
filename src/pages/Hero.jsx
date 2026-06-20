@@ -101,12 +101,12 @@ export default function Hero() {
             <motion.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="flex flex-col items-center p-2 bg-white/80 backdrop-blur-sm rounded-lg border border-gray-100 min-w-[60px]"
+              className="glass-card flex flex-col items-center p-2 rounded-2xl min-w-[60px]"
             >
-              <span className="text-lg sm:text-xl font-bold text-gray-800">
+              <span className="text-lg sm:text-xl font-bold text-gradient-romantic">
                 {String(value).padStart(2, "0")}
               </span>
-              <span className="text-[10px] sm:text-xs text-gray-700 capitalize">
+              <span className="text-[10px] sm:text-xs text-gray-600 capitalize">
                 {labels[interval]}
               </span>
             </motion.div>
@@ -199,19 +199,19 @@ export default function Hero() {
     <>
       <section
         id="home"
-        className="min-h-screen flex flex-col items-center justify-center px-4 py-16 sm:py-20 text-center relative overflow-hidden bg-gray-100"
+        className="min-h-screen flex flex-col items-center justify-center px-4 py-16 sm:py-20 text-center relative overflow-hidden"
       >
         {/* Animated Background Patterns */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[url('/images/bg-pattern.png')] opacity-5 animate-fade-in" />
-          <div className="absolute inset-0 bg-gradient-to-tr from-gray-100/20 to-gray-100/20" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-gray-100/20 via-transparent to-gray-100/20" />
 
           {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-b from-gray-200/20 to-transparent rounded-full blur-3xl transform translate-x-1/4 -translate-y-1/4" />
-          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-t from-gray-200/20 to-transparent rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4" />
+          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-b from-gray-200/30 to-transparent rounded-full blur-3xl transform translate-x-1/4 -translate-y-1/4" />
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-t from-gray-200/30 to-transparent rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4" />
 
           {/* Floating Particles */}
-          <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0 opacity-40">
             {[...Array(20)].map((_, i) => (
               <div
                 key={i}
@@ -244,7 +244,7 @@ export default function Hero() {
           >
             {/* Main Photo */}
             <div
-              className="relative mx-auto w-70 h-70 sm:w-80 sm:h-80 rounded-full overflow-hidden border-8 border-white shadow-2xl group cursor-pointer "
+              className="relative mx-auto w-70 h-70 sm:w-80 sm:h-80 rounded-full overflow-hidden border-[6px] border-white/80 shadow-2xl ring-4 ring-gray-200/50 group cursor-pointer "
               onClick={() => setIsImageModalOpen(true)}
             >
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-500/20 group-hover:opacity-75 transition-opacity" />
@@ -268,9 +268,12 @@ export default function Hero() {
             {/* Decorative Frame */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="absolute -inset-2 border-4 border-gray-100/50 rounded-full -z-10"
+              animate={{ opacity: 1, rotate: 360 }}
+              transition={{
+                opacity: { delay: 0.4 },
+                rotate: { duration: 40, repeat: Infinity, ease: "linear" },
+              }}
+              className="absolute -inset-3 border-2 border-dashed border-gray-300/50 rounded-full -z-10"
             />
           </motion.div>
 
@@ -281,12 +284,12 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="inline-block mx-auto relative"
           >
-            <span className="absolute inset-0 bg-gray-200 blur-md opacity-50" />
-            <span className="relative px-6 py-2 text-sm bg-gray-50 text-gray-600 rounded-full border border-gray-200 shadow-sm">
+            <span className="absolute inset-0 bg-gray-300 blur-md opacity-40" />
+            <span className="glass-pill relative px-6 py-2 text-sm text-gray-600 rounded-full font-medium">
               {config.data.texts.heroBanner}
             </span>
           </motion.div>
-          <h1 className="font-Toy text-3xl text-gray-900">
+          <h1 className="script-unclipped font-Toy text-3xl text-gradient-romantic">
             {config.data.texts.heroGreeting}
           </h1>
 
@@ -299,8 +302,8 @@ export default function Hero() {
             transition={{ delay: 0.8 }}
             className="relative max-w-md mx-auto"
           >
-            <div className="absolute inset-0 bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl" />
-            <div className="relative px-6 py-8 rounded-2xl border border-gray-100">
+            <div className="glass-card absolute inset-0 rounded-2xl" />
+            <div className="relative px-6 py-8 rounded-2xl">
               {/* Decorative elements */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 <div className="w-40 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
@@ -323,12 +326,12 @@ export default function Hero() {
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.6 }}
-                        className="text-2xl sm:text-3xl font-Toy text-black leading-relaxed tracking-wide font-bold"
+                        className="script-unclipped text-2xl sm:text-3xl font-Toy text-black tracking-wide font-bold"
                       >
                         {config.data.groomName}
                         <span className="inline-block mx-4">
                           <Heart
-                            className="w-8 h-8 sm:w-12 sm:h-12 text-rose-500 inline drop-shadow-[0_0_10px_rgba(244,63,94,0.35)]"
+                            className="w-8 h-8 sm:w-12 sm:h-12 text-gray-600 inline drop-shadow-[0_0_10px_rgba(0,0,0,0.15)]"
                             fill="currentColor"
                           />
                         </span>

@@ -16,7 +16,7 @@
 
 // src/App.jsx
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import MainContent from "@/pages/MainContent";
 import LandingPage from "@/pages/LandingPage";
@@ -77,6 +77,27 @@ function App() {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const priorityImages = config.data.media.preloaderPriority;
   const galleryImages = config.data.media.preloaderGallery;
+  const shareImageUrl = new URL(
+    config.data.shareImages.ogImage,
+    window.location.origin,
+  ).href;
+  const currentUrl = window.location.href;
+
+  const pageVariants = {
+    landingInitial: { opacity: 0, scale: 1.02, filter: "blur(10px)" },
+    landingVisible: { opacity: 1, scale: 1, filter: "blur(0px)" },
+    landingExit: { opacity: 0, scale: 0.94, y: -28, filter: "blur(16px)" },
+    invitationInitial: { opacity: 0, scale: 1.04, y: 44, filter: "blur(18px)" },
+    invitationVisible: { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" },
+  };
+
+  const openInvitation = () => {
+    setIsInvitationOpen(true);
+    window.setTimeout(
+      () => window.scrollTo({ top: 0, behavior: "smooth" }),
+      80,
+    );
+  };
 
   return (
     <HelmetProvider>
@@ -88,27 +109,30 @@ function App() {
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={window.location.href} />
+        <meta property="og:url" content={currentUrl} />
         <meta property="og:title" content={config.data.title} />
         <meta property="og:description" content={config.data.description} />
-        <meta property="og:image" content={config.data.shareImages.ogImage} />
+        <meta property="og:image" content={shareImageUrl} />
+        <meta property="og:image:secure_url" content={shareImageUrl} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Тойға шақыру" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={window.location.href} />
+        <meta property="twitter:url" content={currentUrl} />
         <meta property="twitter:title" content={config.data.title} />
         <meta
           property="twitter:description"
           content={config.data.description}
         />
-        <meta
-          property="twitter:image"
-          content={config.data.shareImages.ogImage}
-        />
+        <meta property="twitter:image" content={shareImageUrl} />
+        <meta property="twitter:image:alt" content="Тойға шақыру" />
 
         {/* PWA / Mobile */}
         <link rel="apple-touch-icon" href={config.data.shareImages.thumbnail} />
-        <meta name="theme-color" content="#FDA4AF" />
+        <meta name="theme-color" content="#374151" />
 
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href={config.data.favicon} />
@@ -137,11 +161,30 @@ function App() {
 
         <AnimatePresence mode="wait">
           {!isInvitationOpen ? (
-            <LandingPage onOpenInvitation={() => setIsInvitationOpen(true)} />
+            <motion.div
+              key="landing-page"
+              variants={pageVariants}
+              initial="landingInitial"
+              animate="landingVisible"
+              exit="landingExit"
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              className="relative z-10 min-h-screen"
+            >
+              <LandingPage onOpenInvitation={openInvitation} />
+            </motion.div>
           ) : (
-            <Layout>
-              <MainContent />
-            </Layout>
+            <motion.div
+              key="invitation-page"
+              variants={pageVariants}
+              initial="invitationInitial"
+              animate="invitationVisible"
+              transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
+              className="relative z-10 min-h-screen"
+            >
+              <Layout>
+                <MainContent />
+              </Layout>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

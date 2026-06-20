@@ -22,10 +22,7 @@ export default function Gifts() {
 
   return (
     <>
-      <section
-        id="gifts"
-        className="min-h-screen relative overflow-hidden bg-gray-100"
-      >
+      <section id="gifts" className="min-h-screen relative overflow-hidden">
         <div className="container mx-auto px-4 py-20 relative z-10">
           {/* Section Header */}
           <motion.div

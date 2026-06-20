@@ -7,7 +7,7 @@ const _slug =
     ? window.location.pathname.replace(/^\//, "").split("/")[0]
     : "";
 
-const KNOWN_SLUGS = ["ularbek", "mn"];
-const config = KNOWN_SLUGS.includes(_slug) ? configs[_slug] : configs.ularbek;
+const KNOWN_SLUGS = ["ularbek", "mn", "gulka"];
+const config = KNOWN_SLUGS.includes(_slug) ? configs[_slug] : configs.gulka;
 
 export default config;

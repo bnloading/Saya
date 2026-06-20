@@ -52,10 +52,7 @@ const CustomCalendar = () => {
 export default function Events() {
   return (
     <>
-      <section
-        id="event"
-        className="min-h-screen relative overflow-hidden bg-gray-100"
-      >
+      <section id="event" className="min-h-screen relative overflow-hidden">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -84,7 +81,7 @@ export default function Events() {
               transition={{ delay: 0.3 }}
               className="text-2xl sm:text-3xl font-monserrat text-gray-600 mb-24"
             >
-              <h1 className="font-Toy text-4xl text-gray-800">
+              <h1 className="script-unclipped font-Toy text-3xl text-gradient-romantic mt-3">
                 {config.data.texts.eventOwnersTitle}
               </h1>
               <p className="text-2xl font-monserrat text-gray-900">
@@ -101,7 +98,7 @@ export default function Events() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-4xl md:text-5xl font-cormorant font-semibold text-gray-900 leading-tight tracking-wide mt-24"
+              className="text-4xl md:text-5xl font-cormorant font-semibold text-gradient-romantic leading-tight tracking-wide mt-24"
             >
               {config.data.texts.eventProgramTitle}
             </motion.h2>
@@ -124,7 +121,7 @@ export default function Events() {
               transition={{ delay: 0.5 }}
               className="flex justify-center my-8"
             >
-              <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+              <div className="glass-card rounded-2xl p-6">
                 <CustomCalendar />
               </div>
             </motion.div>
@@ -175,7 +172,7 @@ export default function Events() {
         }
 
         .calendar-day-header {
-          background: #f8f9fa;
+          background: rgba(255, 255, 255, 0.5);
           padding: 8px 4px;
           text-align: center;
           font-weight: 600;
@@ -192,12 +189,12 @@ export default function Events() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #ffffff;
+          background: rgba(255, 255, 255, 0.55);
           border-radius: 8px;
           font-size: 16px;
           font-weight: 500;
-          color: #495057;
-          border: 1px solid #e9ecef;
+          color: #4b5563;
+          border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         .calendar-day.empty {
@@ -214,8 +211,8 @@ export default function Events() {
         }
 
         .calendar-day:hover:not(.empty):not(.marked) {
-          background: #f8f9fa;
-          border-color: #dee2e6;
+          background: rgba(255, 255, 255, 0.8);
+          border-color: rgba(203, 213, 225, 0.7);
         }
       `}</style>
     </>
