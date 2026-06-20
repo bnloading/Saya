@@ -56,7 +56,10 @@ const VideoGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const images = config.data.media.videoSlides;
+  const galleryPhotos = config.data.media.galleryPhotos ?? [];
+  const images = galleryPhotos.length
+    ? galleryPhotos.map((photo) => photo.src)
+    : config.data.media.videoSlides;
 
   // Auto slide functionality
   useEffect(() => {

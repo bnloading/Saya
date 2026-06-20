@@ -508,7 +508,7 @@ const configs = {
         appBackground: "/images/Gulka/11.jpeg",
         landingBackground: "/images/Gulka/11.jpeg",
         landingCover: "/images/Gulka/11.jpeg",
-        heroMainPhoto: "/images/Gulka/11.jpeg",
+        heroMainPhoto: "/images/Gulka/15.jpeg",
         videoSlides: ["/images/Gulka/12.jpeg", "/images/Gulka/13.jpeg"],
         preloaderPriority: ["/images/Gulka/11.jpeg", "/images/Gulka/12.jpeg"],
         preloaderGallery: [
